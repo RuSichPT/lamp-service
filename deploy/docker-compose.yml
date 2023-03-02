@@ -1,0 +1,43 @@
+version: '3.1'
+
+services:
+  postgres:
+    image: postgres:14
+    container_name: postgres-${team}
+    ports:
+      - "${DB_PORT}:5432"
+    volumes:
+      - ./pg_data/pg_data:/var/lib/postgresql/data
+    restart: always
+    environment:
+      - POSTGRES_USER=${DB_USER}
+      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=hackathon
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 3s
+      retries: 50
+
+  adminer:
+    image: adminer
+    restart: always
+    depends_on:
+      - postgres
+    ports:
+      - "908${team}:8080"
+
+  hackathon-backend:
+    image: '${registry_host}/hackathon-backend-${team}:${version}'
+    container_name: hackathon-backend-${team}
+    depends_on:
+      - postgres
+    ports:
+      - "808${team}:8080"
+    volumes:
+      - "./log:/tmp/log"
+    environment:
+      - DB_URL=${DB_URL}
+      - DB_USER=${DB_USER}
+      - DB_PASS=${DB_PASS}
+    restart: unless-stopped
+

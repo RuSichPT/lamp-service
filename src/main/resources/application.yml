@@ -1,0 +1,19 @@
+settings:
+  server:
+    port: 8080
+  db:
+    url: ${DB_URL}
+    user: ${DB_USER}
+    pass: ${DB_PASS}
+
+
+server:
+  port: ${settings.server.port}
+
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: ${settings.db.url}
+    username: ${settings.db.user}
+    password: ${settings.db.pass}
+
