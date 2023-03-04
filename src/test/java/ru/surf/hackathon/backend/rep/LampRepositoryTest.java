@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.annotation.Profile;
 import org.springframework.test.context.ActiveProfiles;
 import ru.surf.hackathon.backend.entity.Lamp;
 
@@ -24,6 +23,14 @@ public class LampRepositoryTest {
     @Test
     public void shouldCorrectlyFindLamp() {
         Optional<Lamp> optionalLamp = lampRepository.findById(1L);
+
+        Assertions.assertTrue(optionalLamp.isPresent());
+    }
+
+    @Test
+    public void shouldCorrectlyFindLamp2() {
+        String barcode = "43168179294";
+        Optional<Lamp> optionalLamp = lampRepository.findByBarcode(barcode);
 
         Assertions.assertTrue(optionalLamp.isPresent());
     }
