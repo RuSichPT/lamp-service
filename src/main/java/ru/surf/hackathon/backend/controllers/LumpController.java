@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.surf.hackathon.backend.dto.LampMini;
 import ru.surf.hackathon.backend.entity.Lamp;
 import ru.surf.hackathon.backend.services.LampService;
 
@@ -28,12 +29,20 @@ public class LumpController {
         return lampService.findAll();
     }
 
-    @GetMapping("/lamps/{id}")
-    ResponseEntity<Lamp> one(@PathVariable Long id) {
+    @GetMapping("/lamps/{id}/full")
+    ResponseEntity<Lamp> oneFull(@PathVariable Long id) {
         Lamp lamp = lampService.find(id);
         log.info(lamp.toString());
 
         return ResponseEntity.ok(lamp);
+
+    }
+    @GetMapping("/lamps/{id}")
+    ResponseEntity<LampMini> one(@PathVariable Long id) {
+        Lamp lamp = lampService.find(id);
+        log.info(lamp.toString());
+
+        return ResponseEntity.ok(LampMini.toModel(lamp));
 
     }
 
