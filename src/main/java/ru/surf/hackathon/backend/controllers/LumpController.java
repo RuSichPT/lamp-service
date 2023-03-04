@@ -1,5 +1,6 @@
 package ru.surf.hackathon.backend.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import ru.surf.hackathon.backend.exceprion.BarcodeLampNotFoundException;
 import ru.surf.hackathon.backend.rep.LampRepository;
 
 import java.util.List;
+
 
 @RestController
 @RequestMapping("api/v1")
@@ -26,8 +28,11 @@ public class LumpController {
     }
 
     @GetMapping("/lamps/{id}")
-    Lamp one(@PathVariable Long id) {
-        return repository.findById(id).orElseThrow(() -> new LampNotFoundException(id));
+    ResponseEntity<Lamp> one(@PathVariable Long id) {
+        System.out.println(repository.findById(id));
+
+        return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> new LampNotFoundException(id)));
+
     }
 
     @GetMapping("/lamps/barcode/{id}")
