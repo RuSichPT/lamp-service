@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import ru.surf.hackathon.backend.entity.Lamp;
 import ru.surf.hackathon.backend.exceprion.BarcodeLampNotFoundException;
 import ru.surf.hackathon.backend.exceprion.LampNotFoundException;
+import ru.surf.hackathon.backend.exceprion.NotValidException;
 import ru.surf.hackathon.backend.rep.LampRepository;
 
 import java.util.List;
@@ -28,11 +29,12 @@ public class LampServiceImpl implements LampService {
     }
 
     @Override
-    public Lamp findByBarcode(String barcode) {
-        if (barcode.matches("\\d*")){return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(barcode));}
-        else {
-            return null;
-        }// выкидывать ошибку
+    public Lamp findByBarcode(String barcode) throws NotValidException {
+        if (barcode.matches("\\d*")) {
+            return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(barcode));
+        } else {
+            throw new NotValidException(barcode);
+        }
     }
 
 }

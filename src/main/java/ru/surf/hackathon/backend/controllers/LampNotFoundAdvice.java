@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import ru.surf.hackathon.backend.exceprion.BarcodeLampNotFoundException;
 import ru.surf.hackathon.backend.exceprion.LampNotFoundException;
+import ru.surf.hackathon.backend.exceprion.NotValidException;
 import ru.surf.hackathon.backend.exceprion.error.ErrorResponse;
 
 @RestControllerAdvice
@@ -22,5 +23,11 @@ public class LampNotFoundAdvice {
     ResponseEntity<ErrorResponse> BarcodeLampNotFoundHandler(BarcodeLampNotFoundException ex) {
         log.info(ex.getMessage());
         return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(NotValidException.class)
+    ResponseEntity<ErrorResponse> NotValidHandler(NotValidException ex) {
+        log.info(ex.getMessage());
+        return new ResponseEntity<>(new ErrorResponse(ex.getMessage()), HttpStatus.BAD_REQUEST);
     }
 }
