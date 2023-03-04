@@ -49,11 +49,13 @@ public class LumpController {
     }
 
     @GetMapping("/lamps/barcode/{barcode}")
-    LampMini oneBarcode(@PathVariable String barcode, @RequestHeader(HASH) String hash) {
+    LampMini oneBarcode(@PathVariable String barcode
+//            , @RequestHeader(HASH) String hash
+    ) {
         Lamp lamp = lampService.findByBarcode(barcode);
         log.info(lamp.toString());
 
-        userHistoryService.add(hash,barcode);
+//        userHistoryService.add(hash,barcode);
         return LampMini.toModel(lamp);
     }
 
