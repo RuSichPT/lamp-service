@@ -29,7 +29,10 @@ public class LampServiceImpl implements LampService {
 
     @Override
     public Lamp findByBarcode(String barcode) {
-        return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(barcode));
+        if (barcode.matches("\\d*")){return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(barcode));}
+        else {
+            return null;
+        }// выкидывать ошибку
     }
 
 }
