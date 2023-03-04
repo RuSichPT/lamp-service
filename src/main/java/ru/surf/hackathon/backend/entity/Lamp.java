@@ -1,35 +1,38 @@
 package ru.surf.hackathon.backend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-import java.sql.Date;
 @Entity
+@Table(name = "led", schema = "lamps")
 public class Lamp {
 
 
     @Id
+    @Column(name="no")
     Long id;
     String brand;
     String model;
-    Double power_l;
-    Double matt;
-    Double dim;
-    Integer color_l;
-    Integer lm_l;
-    Integer eq_l;
-    Integer ra_l;
+    String power_l;
+    String matt;
+    String dim;
+    String color_l;
+    String lm_l;
+    String eq_l;
+    String ra_l;
     String u;
-    Double pf_l;
-    Integer angle_l;
-    Integer life;
-    Integer war;
-    Integer prod;
-    Integer w;
-    Integer d;
-    Integer h;
-    Integer t;
-    Long barcode;
+    String pf_l;
+    String angle_l;
+    String life;
+    String war;
+    String prod;
+    String w;
+    String d;
+    String h;
+    String t;
+    String barcode;
     String plant;
     String base;
     String shape;
@@ -37,33 +40,34 @@ public class Lamp {
     String type2;
     String url;
     String shop;
-    Double rub;
-    Double usd;
-    Double p;
-    Integer pf;
-    Integer lm;
-    Integer color;
-    Double cri;
-    Integer r9;
-    Double Rf;
-    Double Rg;
-    Double Duv;
-    Double flicker;
-    Integer angle;
-    Integer sw;
-    Integer umin;
-    Integer drv;
-    Integer tmax;
-    Date date;
-    Integer instruments;
+    String rub;
+    String usd;
+    String p;
+    String pf;
+    String lm;
+    String color;
+    String cri;
+    String r9;
+    String rf;
+    String rg;
+    String duv;
+    String flicker;
+    String angle;
+    @Column(name="switch")
+    String sw;
+    String umin;
+    String drv;
+    String tmax;
+    String date;
+    String instruments;
     String add2;
     String add3;
     String add4;
     String add5;
-    Integer cqs;
-    Integer eq;
-    Double rating;
-    Double act;
+    String cqs;
+    String eq;
+    String rating;
+    String act;
     String lamp_image;
     String lamp_desc;
 
@@ -110,9 +114,9 @@ public class Lamp {
                 ", color=" + color +
                 ", cri=" + cri +
                 ", r9=" + r9 +
-                ", Rf=" + Rf +
-                ", Rg=" + Rg +
-                ", Duv=" + Duv +
+                ", rf=" + rf +
+                ", rg=" + rg +
+                ", duv=" + duv +
                 ", flicker=" + flicker +
                 ", angle=" + angle +
                 ", sw=" + sw +

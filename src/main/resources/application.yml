@@ -16,4 +16,7 @@ spring:
     url: ${settings.db.url}
     username: ${settings.db.user}
     password: ${settings.db.pass}
-
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    show-sql: true
