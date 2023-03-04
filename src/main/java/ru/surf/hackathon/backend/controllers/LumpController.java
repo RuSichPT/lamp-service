@@ -1,44 +1,45 @@
 package ru.surf.hackathon.backend.controllers;
 
+import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.surf.hackathon.backend.entity.Lamp;
-import ru.surf.hackathon.backend.exceprion.LampNotFoundException;
-import ru.surf.hackathon.backend.exceprion.BarcodeLampNotFoundException;
-import ru.surf.hackathon.backend.rep.LampRepository;
+import ru.surf.hackathon.backend.services.LampService;
 
 import java.util.List;
 
 
 @RestController
 @RequestMapping("api/v1")
+@AllArgsConstructor
+@Slf4j
 public class LumpController {
-    private final LampRepository repository;
 
-    public LumpController(LampRepository repository) {
-        this.repository = repository;
-    }
+    @Autowired
+    private final LampService lampService;
 
     @GetMapping("/lamps")
     List<Lamp> all() {
-        return repository.findAll();
+        return lampService.findAll();
     }
 
     @GetMapping("/lamps/{id}")
     ResponseEntity<Lamp> one(@PathVariable Long id) {
-        System.out.println(repository.findById(id));
+        Lamp lamp = lampService.find(id);
+        log.info(lamp.toString());
 
-        return ResponseEntity.ok(repository.findById(id).orElseThrow(() -> new LampNotFoundException(id)));
+        return ResponseEntity.ok(lamp);
 
     }
 
-    @GetMapping("/lamps/barcode/{id}")
-    Lamp oneBarcode(@PathVariable Long id) {
-
-        return repository.findByBarcode(id).orElseThrow(() -> new BarcodeLampNotFoundException(id));
+    @GetMapping("/lamps/barcode/{barcode}")
+    Lamp oneBarcode(@PathVariable Long barcode) {
+        return lampService.findByBarcode(String.valueOf(barcode));
     }
 
 

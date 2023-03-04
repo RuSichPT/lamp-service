@@ -6,5 +6,5 @@ import ru.surf.hackathon.backend.entity.Lamp;
 import java.util.Optional;
 
 public interface LampRepository extends JpaRepository<Lamp, Long> {
-     Optional<Lamp> findByBarcode(Long barcode);
+     Optional<Lamp> findByBarcode(String barcode);
 }
