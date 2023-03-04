@@ -4,16 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ru.surf.hackathon.backend.dto.LampMini;
 import ru.surf.hackathon.backend.entity.Lamp;
 import ru.surf.hackathon.backend.services.LampService;
+import ru.surf.hackathon.backend.services.UserHistoryService;
 
 import java.util.List;
-
 
 @RestController
 @RequestMapping("api/v1")
@@ -21,8 +18,13 @@ import java.util.List;
 @Slf4j
 public class LumpController {
 
+    private static final String HASH = "hash";
+
     @Autowired
     private final LampService lampService;
+
+    @Autowired
+    private final UserHistoryService userHistoryService;
 
     @GetMapping("/lamps")
     List<Lamp> all() {
@@ -47,9 +49,11 @@ public class LumpController {
     }
 
     @GetMapping("/lamps/barcode/{barcode}")
-    LampMini oneBarcode(@PathVariable String barcode) {
+    LampMini oneBarcode(@PathVariable String barcode, @RequestHeader(HASH) String hash) {
         Lamp lamp = lampService.findByBarcode(barcode);
         log.info(lamp.toString());
+
+        userHistoryService.add(hash,barcode);
         return LampMini.toModel(lamp);
     }
 
