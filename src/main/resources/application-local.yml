@@ -2,6 +2,6 @@ settings:
   server:
     port: 8080
   db:
-    url: jdbc:postgresql://localhost:5432/hackathon
+    url: jdbc:postgresql://event.surfstudio.ru:5433/hackathon
     user: postgres
-    pass: postgres
+    pass: postgres5433
