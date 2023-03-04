@@ -47,8 +47,17 @@ public class LumpController {
     }
 
     @GetMapping("/lamps/barcode/{barcode}")
-    Lamp oneBarcode(@PathVariable String barcode) {
-        return lampService.findByBarcode(barcode);
+    LampMini oneBarcode(@PathVariable String barcode) {
+        Lamp lamp = lampService.findByBarcode(barcode);
+        log.info(lamp.toString());
+        return LampMini.toModel(lamp);
+    }
+
+    @GetMapping("/lamps/barcode/{barcode}/full")
+    Lamp oneBarcodeFull(@PathVariable String barcode) {
+        Lamp lamp = lampService.findByBarcode(barcode);
+        log.info(lamp.toString());
+        return lamp;
     }
 
 
