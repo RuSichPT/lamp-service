@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @AllArgsConstructor
-public class LampServiceImpl implements LampService{
+public class LampServiceImpl implements LampService {
 
     @Autowired
     private final LampRepository lampRepository;
@@ -29,7 +29,7 @@ public class LampServiceImpl implements LampService{
 
     @Override
     public Lamp findByBarcode(String barcode) {
-        return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(Long.parseLong(barcode)));
+        return lampRepository.findByBarcode(barcode).orElseThrow(() -> new BarcodeLampNotFoundException(barcode));
     }
 
 }
