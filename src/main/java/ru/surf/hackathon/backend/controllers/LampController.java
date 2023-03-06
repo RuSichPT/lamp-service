@@ -50,24 +50,15 @@ public class LampController {
     }
 
     @GetMapping("/lamps/barcode/{barcode}")
-    LampMini oneBarcode(@PathVariable String barcode) {
-        Lamp lamp = lampService.findByBarcode(barcode);
-        log.info(lamp.toString());
-        return LampMini.toModel(lamp);
-    }
-
-    @GetMapping("/lamps/barcode/{barcode}/hash")
-    LampMini oneBarcodeHash(@PathVariable String barcode, @RequestHeader(HASH) String hash) {
-        Lamp lamp = lampService.findByBarcode(barcode);
-        log.info(lamp.toString());
-        userHistoryService.add(hash, barcode);
-        return LampMini.toModel(lamp);
+    LampMini oneBarcode(@PathVariable String barcode, @RequestHeader(value = HASH, required = false) String hash) {
+        return LampMini.toModel(oneBarcodeFull(barcode, hash));
     }
 
     @GetMapping("/lamps/barcode/{barcode}/full")
-    Lamp oneBarcodeFull(@PathVariable String barcode) {
+    Lamp oneBarcodeFull(@PathVariable String barcode, @RequestHeader(value = HASH, required = false) String hash) {
         Lamp lamp = lampService.findByBarcode(barcode);
         log.info(lamp.toString());
+        if (hash != null) userHistoryService.add(hash, barcode);
         return lamp;
     }
 
