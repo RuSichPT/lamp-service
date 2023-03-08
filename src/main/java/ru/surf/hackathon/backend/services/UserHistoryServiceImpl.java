@@ -24,7 +24,7 @@ public class UserHistoryServiceImpl implements UserHistoryService {
 
     @Override
     public List<UserHistory> findAllByHash(String hash) {
-        Optional<List<UserHistory>> list = userHistoryRepository.findAllByHash(hash);
-        return list.map(userHistories -> userHistories.stream().sorted().toList()).orElseGet(ArrayList::new);
+        Optional<List<UserHistory>> list = userHistoryRepository.findAllByHashOrderByDateDesc(hash);
+        return list.orElse(new ArrayList<>());
     }
 }

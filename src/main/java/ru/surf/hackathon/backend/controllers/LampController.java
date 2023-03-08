@@ -16,7 +16,7 @@ import java.util.List;
 @RequestMapping("api/v1")
 @AllArgsConstructor
 @Slf4j
-public class LumpController {
+public class LampController {
 
     private static final String HASH = "hash";
 
@@ -39,6 +39,7 @@ public class LumpController {
         return ResponseEntity.ok(lamp);
 
     }
+
     @GetMapping("/lamps/{id}")
     ResponseEntity<LampMini> one(@PathVariable Long id) {
         Lamp lamp = lampService.find(id);
@@ -49,20 +50,15 @@ public class LumpController {
     }
 
     @GetMapping("/lamps/barcode/{barcode}")
-    LampMini oneBarcode(@PathVariable String barcode
-//            , @RequestHeader(HASH) String hash
-    ) {
-        Lamp lamp = lampService.findByBarcode(barcode);
-        log.info(lamp.toString());
-
-//        userHistoryService.add(hash,barcode);
-        return LampMini.toModel(lamp);
+    LampMini oneBarcode(@PathVariable String barcode, @RequestHeader(value = HASH, required = false) String hash) {
+        return LampMini.toModel(oneBarcodeFull(barcode, hash));
     }
 
     @GetMapping("/lamps/barcode/{barcode}/full")
-    Lamp oneBarcodeFull(@PathVariable String barcode) {
+    Lamp oneBarcodeFull(@PathVariable String barcode, @RequestHeader(value = HASH, required = false) String hash) {
         Lamp lamp = lampService.findByBarcode(barcode);
         log.info(lamp.toString());
+        if (hash != null) userHistoryService.add(hash, barcode);
         return lamp;
     }
 

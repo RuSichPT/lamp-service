@@ -7,16 +7,22 @@ settings:
     pass: ${DB_PASS}
 
 
+
 server:
   port: ${settings.server.port}
 
 spring:
   datasource:
-    driver-class-name: org.postgresql.Driver
+#    driver-class-name: org.postgresql.Driver
+    driver-class-name: org.sqlite.JDBC
     url: ${settings.db.url}
     username: ${settings.db.user}
     password: ${settings.db.pass}
   jpa:
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
+#    database-platform: org.hibernate.dialect.PostgreSQLDialect
     generate-ddl: false
     show-sql: true
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+    hibernate:
+      ddl-auto: update
+    open-in-view: true

@@ -7,5 +7,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserHistoryRepository extends JpaRepository<UserHistory, Long> {
-    Optional<List<UserHistory>> findAllByHash(String hash);
+    Optional<List<UserHistory>> findAllByHashOrderByDateDesc(String hash);
 }
